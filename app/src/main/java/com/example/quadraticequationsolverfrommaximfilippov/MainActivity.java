@@ -19,17 +19,24 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.Random;
+
 public class MainActivity extends AppCompatActivity {
     
 
     String st;
-    final int REQUEST_CODE=100;
+    Intent si;
+    Intent gi;
+    int REQUEST_CODE=100;
+    int result=-1;
+    int source;
     int x1;
     int x2;
     TextView Formula;
     TextView a;
     TextView b;
     TextView c;
+    TextView lastX;
     int a1;
     int b1;
     int c1;
@@ -40,26 +47,26 @@ public class MainActivity extends AppCompatActivity {
     int max = 50;
     int min = -50;
 
+
     @Override
     protected void onActivityResult(int source, int result, @Nullable Intent data_back){
 
         super.onActivityResult(source, result, data_back);
-
-        if (source == REQUEST_CODE) {
+        if(source == REQUEST_CODE)
 
             if (result == Second_MainActivity.RESULT_OK) {
 
                 if (data_back != null) {
-
                     x1 = data_back.getIntExtra("x1", -1);
                     x2 = data_back.getIntExtra("x2", -1);
+                    lastX.setText("last x" + "\nx1= " + x1 + "\nx2= " + x2);
                 }
 
             }
 
-        }
 
     }
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
@@ -74,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         a= findViewById(R.id.textView3);
         b= findViewById(R.id.textView4);
         c= findViewById(R.id.textView5);
+        lastX = findViewById(R.id.textView6);
         answer= findViewById(R.id.button);
         a2= findViewById(R.id.editTextNumberSigned);
         b2= findViewById(R.id.editTextNumberSigned2);
@@ -84,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
     public void answer(View view){
 
         st=a2.getText().toString();
@@ -92,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         b1=Integer.parseInt(st);
         st=c2.getText().toString();
         c1=Integer.parseInt(st);
-        Intent si = new Intent(this, Second_MainActivity.class);
+        si = new Intent(this, Second_MainActivity.class);
         si.putExtra("a", a1);
         si.putExtra("b", b1);
         si.putExtra("c", c1);
@@ -100,10 +110,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void random(View view){
-        //a1= new Random().nextInt((max - min) + 1) + min;
-        //b1= new Random().nextInt((max - min) + 1) + min;
-        //c1= new Random().nextInt((max - min) + 1) + min;
-        Intent si = new Intent(this, Second_MainActivity.class);
+        a1= new Random().nextInt((max - min) + 1) + min;
+        b1= new Random().nextInt((max - min) + 1) + min;
+        c1= new Random().nextInt((max - min) + 1) + min;
+        si = new Intent(this, Second_MainActivity.class);
         si.putExtra("a", a1);
         si.putExtra("b", b1);
         si.putExtra("c", c1);
